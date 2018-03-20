@@ -35,9 +35,8 @@ public class OrderHistoryBy implements Helper {
         try {
             WebDriverWait nwait = new WebDriverWait(driver,60);
             WebElement LastPageNo = nwait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("ul.pagination > li:nth-of-type(5) > a.pagination__item-elem")));
-                    /*ExpectedConditions.elementToBeClickable(By.cssSelector("ul.pagination > li:nth-of-type(5) > a.pagination__item-elem")),
-                    ExpectedConditions.presenceOfElementLocated(By.cssSelector("ul.pagination > li:nth-of-type(5) > a.pagination__item-elem"))*/
-
+            JavascriptExecutor js = (JavascriptExecutor) driver;
+            js.executeScript("arguments[0].scrollIntoView();", LastPageNo);
             captureScreen();
             LastPageNo.click();
         } catch (ElementNotVisibleException e) {
@@ -49,11 +48,9 @@ public class OrderHistoryBy implements Helper {
             WebElement Order0119164309 = swait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("tr.zebra > td.order-code.title")));
             captureScreen();
             Assert.assertTrue(true, String.valueOf(Order0119164309.getText().startsWith("011")));
-            /*Assert.assertEquals(Order0119164309.getText(), "0119164399");*/
 
         } catch (Exception w) {
             Assert.fail("Order element 0119164399 not found");
-
         }
     }
 
