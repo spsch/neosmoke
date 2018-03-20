@@ -7,6 +7,7 @@ import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -35,15 +36,16 @@ public class OrderHistoryBy implements Helper {
     @FindBy(css="tr > th:nth-of-type(6) > span:nth-of-type(1)") private WebElement Filter_Status;*/
     @FindBy(css="div.cmx-title-section > div:nth-of-type(1) > div") private WebElement Left_frame_customer_name;
     @FindBy(css="div.cmx-title-section > div:nth-of-type(1) > span") private WebElement Left_frame_customer_id;
-    @FindBy(css="ul.pagination > li:nth-of-type(5) > a.pagination__item-elem") private WebElement LastPageNo;
 
 
     public void CheckLastPaginationNumber() {
         try {
-            LastPageNo.getText();
+            WebDriverWait nwait = new WebDriverWait(driver,30);
+            WebElement LastPageNo = nwait.until(ExpectedConditions
+                    .elementToBeClickable(By.cssSelector("ul.pagination > li:nth-of-type(5) > a.pagination__item-elem")));
             LastPageNo.click();
         } catch (ElementNotVisibleException e) {
-            Assert.fail("Last page number in pagination not visible" + e);
+            Assert.fail("Last page number in pagination not visible" + e );
 
 
         }
