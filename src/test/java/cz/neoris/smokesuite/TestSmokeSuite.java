@@ -9,10 +9,10 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.remote.Augmenter;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeTest;
-import org.testng.annotations.Test;
+import org.testng.Assert;
+import org.testng.ITestListener;
+import org.testng.ITestResult;
+import org.testng.annotations.*;
 import sun.rmi.runtime.Log;
 
 import java.io.File;
@@ -58,7 +58,6 @@ public class TestSmokeSuite {
         LOG.log(Level.INFO, "Start MX log in test");
         LoginPageBy loginpage = new LoginPageBy(driver).get();
         loginpage.LogInMX();
-        captureScreen();
     }
 
     @Test(priority = 1)
@@ -86,7 +85,7 @@ public class TestSmokeSuite {
         try {
             WebDriver augdriver = new Augmenter().augment(driver);
             File source = ((TakesScreenshot)augdriver).getScreenshotAs(OutputType.FILE);
-            path = "C:\\Users\\jan.svehlak\\code\\SmokeSuite\\src\\test\\java\\cz\\neoris\\smokesuite" + source.getName();
+            path = "C:\\Users\\jan.svehlak\\code\\SmokeSuite\\src\\test\\java\\cz\\neoris\\smokesuite\\screenshots" + source.getName();
             FileUtils.copyFile(source, new File(path));
         } catch (IOException e) {
             path = "Fail taking screenshot" + e;

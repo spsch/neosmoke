@@ -1,10 +1,13 @@
 package cz.neoris.smokesuite.pages;
 
+import cz.neoris.smokesuite.CaptureScreen;
 import cz.neoris.smokesuite.Helper;
+import org.apache.commons.io.FileUtils;
 import org.omg.CORBA.TIMEOUT;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.remote.Augmenter;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -13,6 +16,8 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -40,25 +45,23 @@ public class OrderHistoryBy implements Helper {
 
     public void CheckLastPaginationNumber() {
         try {
-            WebDriverWait nwait = new WebDriverWait(driver,30);
+            WebDriverWait nwait = new WebDriverWait(driver,60);
             WebElement LastPageNo = nwait.until(ExpectedConditions
                     .elementToBeClickable(By.cssSelector("ul.pagination > li:nth-of-type(5) > a.pagination__item-elem")));
+            captureScreen();
             LastPageNo.click();
         } catch (ElementNotVisibleException e) {
             Assert.fail("Last page number in pagination not visible" + e );
-
-
         }
 
         try {
             WebDriverWait swait = new WebDriverWait(driver, 30);
             WebElement Order0119164309 = swait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("tr.zebra > td.order-code.title")));
+            captureScreen();
+            Assert.assertEquals(Order0119164309.getText(), "0119164399");
 
-            if (!Order0119164309.getText().equals("0119164309")) {
-                Assert.fail("Order element found, but the number is not correct, number is " + Order0119164309.getText());
-            }
         } catch (Exception w) {
-            Assert.fail("Order element 0119162166 not found");
+            Assert.fail("Order element 0119164399 not found");
 
         }
     }
@@ -115,6 +118,21 @@ public class OrderHistoryBy implements Helper {
         if (driver instanceof JavascriptExecutor) {
             ((JavascriptExecutor) driver).executeScript("arguments[].scrollIntoView(true);", elem);
         }
+    }
+
+    public String captureScreen() {
+        String path;
+
+        try {
+            WebDriver augdriver = new Augmenter().augment(driver);
+            File source = ((TakesScreenshot)augdriver).getScreenshotAs(OutputType.FILE);
+            path = ".\\SmokeSuite\\src\\test\\java\\cz\\neoris\\smokesuite\\screenshots\\" + source.getName();
+            FileUtils.copyFile(source, new File(path));
+        } catch (IOException e) {
+            path = "Fail taking screenshot" + e;
+        }
+
+        return path;
     }
 
 }
