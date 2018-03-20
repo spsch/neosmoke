@@ -1,6 +1,7 @@
 package cz.neoris.smokesuite.pages;
 
 import cz.neoris.smokesuite.Helper;
+import org.omg.CORBA.TIMEOUT;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
@@ -34,8 +35,33 @@ public class OrderHistoryBy implements Helper {
     @FindBy(css="tr > th:nth-of-type(6) > span:nth-of-type(1)") private WebElement Filter_Status;*/
     @FindBy(css="div.cmx-title-section > div:nth-of-type(1) > div") private WebElement Left_frame_customer_name;
     @FindBy(css="div.cmx-title-section > div:nth-of-type(1) > span") private WebElement Left_frame_customer_id;
+    @FindBy(css="ul.pagination > li:nth-of-type(5) > a.pagination__item-elem") private WebElement LastPageNo;
 
-    public void CheckTableByOrder() {
+
+    public void CheckLastPaginationNumber() {
+        try {
+            LastPageNo.getText();
+            LastPageNo.click();
+        } catch (ElementNotVisibleException e) {
+            Assert.fail("Last page number in pagination not visible" + e);
+
+
+        }
+
+        try {
+            WebDriverWait swait = new WebDriverWait(driver, 30);
+            WebElement Order0119164309 = swait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("tr.zebra > td.order-code.title")));
+
+            if (!Order0119164309.getText().equals("0119164309")) {
+                Assert.fail("Order element found, but the number is not correct, number is " + Order0119164309.getText());
+            }
+        } catch (Exception w) {
+            Assert.fail("Order element 0119162166 not found");
+
+        }
+    }
+
+    /*public void CheckTableByOrder() {
 
         JavascriptExecutor js = (JavascriptExecutor) driver;
         //Find element by link text and store in variable "Element"
@@ -43,7 +69,7 @@ public class OrderHistoryBy implements Helper {
         //This will scroll the page till the element is found
         js.executeScript("arguments[0].scrollIntoView();", Element);
         Assert.assertEquals(Element.getText(), QA_MX_ORDERNO);
-    }
+    }*/
 
     public void CheckOrderTableHeader() {
 

@@ -58,14 +58,16 @@ public class TestSmokeSuite {
         LOG.log(Level.INFO, "Start MX log in test");
         LoginPageBy loginpage = new LoginPageBy(driver).get();
         loginpage.LogInMX();
+        captureScreen();
     }
 
     @Test(priority = 1)
     public void TestCemexGo_Orders_History_MX() throws InterruptedException {
         LOG.info("Orders history page check");
         OrderHistoryBy ohb = new OrderHistoryBy(driver);
+        ohb.CheckLastPaginationNumber();
+        captureScreen();
         ohb.CheckOrderTableHeader();
-        ohb.CheckTableByOrder();
         ohb.CheckLegalEntities();
     }
 
@@ -87,7 +89,7 @@ public class TestSmokeSuite {
             path = "C:\\Users\\jan.svehlak\\code\\SmokeSuite\\src\\test\\java\\cz\\neoris\\smokesuite" + source.getName();
             FileUtils.copyFile(source, new File(path));
         } catch (IOException e) {
-            path = "Fail" + e;
+            path = "Fail taking screenshot" + e;
         }
 
         return path;
