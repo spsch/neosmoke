@@ -11,7 +11,6 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
-import javax.jws.soap.SOAPBinding;
 
 public class LoginPageBy extends LoadableComponent<LoginPageBy> implements Helper {
 

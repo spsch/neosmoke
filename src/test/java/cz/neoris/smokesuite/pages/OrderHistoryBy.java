@@ -1,18 +1,12 @@
 package cz.neoris.smokesuite.pages;
 
-import cz.neoris.smokesuite.CaptureScreen;
 import cz.neoris.smokesuite.Helper;
 import org.apache.commons.io.FileUtils;
-import org.omg.CORBA.TIMEOUT;
 import org.openqa.selenium.*;
-import org.openqa.selenium.interactions.Action;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.Augmenter;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.LoadableComponent;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
