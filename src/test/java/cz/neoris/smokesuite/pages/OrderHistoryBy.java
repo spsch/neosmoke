@@ -77,7 +77,7 @@ public class OrderHistoryBy implements Helper {
             String col_text = col.getText();
             LOG_OH.info("radky: " + col_text);
         }
-        Integer const_col = 6;
+        Integer const_col = 7;
         Assert.assertEquals(number_of_cols, const_col);
     }
 
